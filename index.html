@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Graduation</title>
+
+<!-- Calligraphy Font -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Great Vibes', cursive;
+    background: url("assets/background.jpg") center/cover no-repeat;
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(8px);
+    background: rgba(255,255,255,0.4);
+    z-index: 1;
+}
+
+.title {
+    position: absolute;
+    top: 8%;
+    width: 100%;
+    text-align: center;
+    font-size: 3rem;
+    color: #444;
+    z-index: 2;
+}
+
+.envelope-container {
+    position: absolute;
+    bottom: -300px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+    animation: slideUp 1.5s forwards;
+}
+
+.envelope-container img {
+    width: 80vw;       /* 80% lebar layar HP */
+    max-width: 420px;  /* biar nggak kegedean di layar besar */
+    transition: 0.4s ease;
+}
+
+.envelope-container img:active {
+    transform: scale(0.95);
+}
+
+@keyframes slideUp {
+    to {
+        bottom: 10%;
+    }
+}
+
+.final-text {
+    position: absolute;
+    bottom: 15%;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    opacity: 0;
+    z-index: 2;
+    transition: opacity 1s ease;
+}
+
+canvas {
+    position: fixed;   /* penting biar nempel layar */
+    top: 0;
+    left: 0;
+    width: 100vw;      /* full lebar */
+    height: 100vh;     /* full tinggi */
+    z-index: 5;
+    pointer-events: none;
+}
+</style>
+
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<h1 class="title">Happy Graduation</h1>
+
+<div class="envelope-container">
+    <img id="envelope" src="assets/amplop-closed.png" alt="Envelope">
+</div>
+
+<h2 class="final-text">Happy Graduations!!!</h2>
+
+<audio id="gradSound" src="assets/sound.mp3"></audio>
+
+<canvas id="fireworks"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/fireworks-js@2/dist/index.umd.js"></script>
+
+<script>
+const envelope = document.getElementById("envelope");
+const sound = document.getElementById("gradSound");
+const finalText = document.querySelector(".final-text");
+
+let stage = 0;
+
+const images = [
+    "assets/amplop-closed.png",
+    "assets/amplop-open-1.png",
+    "assets/amplop-open-2.png",
+    "assets/amplop-open-3.png"
+];
+
+envelope.addEventListener("click", () => {
+    if (stage < 3) {
+        stage++;
+        envelope.src = images[stage];
+
+        // Sound mulai saat tahap 2 (klik pertama)
+        if (stage === 1) {
+            sound.play();
+        }
+    }
+
+    if (stage === 3) {
+        launchFireworks();
+        finalText.style.opacity = 1;
+    }
+});
+
+function launchFireworks() {
+    const container = document.getElementById("fireworks");
+
+    const fireworks = new Fireworks.default(container, {
+        autoresize: true,
+        opacity: 0.8,
+        acceleration: 1.05,
+        friction: 0.95,
+        gravity: 1.5,
+        particles: 120,
+        trace: 4,
+        explosion: 6,
+        boundaries: {
+            top: 0,
+            bottom: window.innerHeight,
+            left: 0,
+            right: window.innerWidth
+        }
+    });
+
+    fireworks.start();
+}
+</script>
+
+</body>
+</html>
