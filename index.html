@@ -54,9 +54,19 @@ body {
 }
 
 .envelope-container img {
-    width: 80vw;       /* 80% lebar layar HP */
-    max-width: 420px;  /* biar nggak kegedean di layar besar */
-    transition: 0.4s ease;
+    width: 80vw;
+    max-width: 420px;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.fade-out {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.fade-in {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .envelope-container img:active {
@@ -65,7 +75,7 @@ body {
 
 @keyframes slideUp {
     to {
-        bottom: 20%;
+        bottom: 10%;
     }
 }
 
@@ -125,15 +135,29 @@ const images = [
     "assets/amplop-open-3.png"
 ];
 
-envelope.addEventListener("click", () => {
+envelope.addEventListener("click", async () => {
     if (stage < 3) {
-        stage++;
-        envelope.src = images[stage];
 
-        // Sound mulai saat tahap 2 (klik pertama)
-        if (stage === 1) {
-            sound.play();
-        }
+        envelope.classList.add("fade-out");
+
+        setTimeout(async () => {
+            stage++;
+            envelope.src = images[stage];
+
+            if (stage === 1) {
+                try {
+                    await sound.play();
+                } catch (err) {}
+            }
+
+            envelope.classList.remove("fade-out");
+            envelope.classList.add("fade-in");
+
+            setTimeout(() => {
+                envelope.classList.remove("fade-in");
+            }, 400);
+
+        }, 400);
     }
 
     if (stage === 3) {
@@ -167,5 +191,4 @@ function launchFireworks() {
 </script>
 
 </body>
-
 </html>
