@@ -75,7 +75,7 @@ body {
 
 @keyframes slideUp {
     to {
-        bottom: 10%;
+        bottom: 30%;
     }
 }
 
@@ -113,13 +113,52 @@ canvas {
     <img id="envelope" src="assets/amplop-closed.png" alt="Envelope">
 </div>
 
-<h2 class="final-text">Happy Graduations!!!</h2>
+<div <div class="final-text">
+
+<p style="font-family: sans-serif; font-size:16px; color:#444; margin-bottom:10px;">
+Tinggalkan pesan untuk seseorang yang mengirimmu ini 💌
+</p>
+
+<input id="from_name" placeholder="Your Name"
+style="padding:10px;border:none;border-radius:8px;margin:5px;width:70%;max-width:250px;">
+
+<br>
+
+<textarea id="message" placeholder="Write your message..."
+style="padding:10px;border:none;border-radius:8px;margin:5px;width:70%;max-width:250px;height:80px;"></textarea>
+
+<br>
+
+<button onclick="sendMessage()"
+style="padding:10px 20px;border:none;border-radius:10px;background:#fff;color:#444;font-weight:bold;">
+Send
+</button>
+
+</div>
+
+<input id="from_name" placeholder="Your Name"
+style="padding:10px;border:none;border-radius:8px;margin:5px;width:70%;max-width:250px;">
+
+<br>
+
+<textarea id="message" placeholder="Write your message..."
+style="padding:10px;border:none;border-radius:8px;margin:5px;width:70%;max-width:250px;height:80px;"></textarea>
+
+<br>
+
+<button onclick="sendMessage()"
+style="padding:10px 20px;border:none;border-radius:10px;background:#fff;color:#444;font-weight:bold;">
+Send
+</button>
+
+</div>
 
 <audio id="gradSound" src="assets/sound.mp3"></audio>
 
 <canvas id="fireworks"></canvas>
 
 <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2/dist/index.umd.js"></script>
+
 
 <script>
 const envelope = document.getElementById("envelope");
@@ -187,6 +226,30 @@ function launchFireworks() {
     });
 
     fireworks.start();
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+
+(function(){
+emailjs.init("TCM2fJBBwcjLh27Dh");
+})();
+
+function sendMessage(){
+
+let name = document.getElementById("from_name").value;
+let message = document.getElementById("message").value;
+
+emailjs.send("Graduation","template_0gqu7rt",{
+from_name: name,
+message: message
+}).then(function(){
+
+alert("Message Sent!");
+
+});
+
 }
 </script>
 
