@@ -65,7 +65,7 @@ opacity:0;
 }
 
 .envelope-container img{
-width:80vw;
+width:95vw;
 max-width:420px;
 transition:opacity .4s, transform .4s;
 }
@@ -161,7 +161,7 @@ pointer-events:none;
 
 .popup{
 position:fixed;
-top:50%;
+top:65%;
 left:50%;
 transform:translate(-50%,-50%) scale(.8);
 background:rgba(255,255,255,0.1);
@@ -273,6 +273,13 @@ popup.classList.add("show")
 }
 
 popup.addEventListener("click",()=>{
+popupStage++
+
+if(popupStage===0){
+sound.play().catch(()=>{})
+}
+
+popupStage++
 
 popupStage++
 
@@ -283,6 +290,9 @@ popupText.innerText=popupMessages[popupStage]
 }else{
 
 popup.classList.remove("show")
+
+envelopeContainer.style.opacity=1
+envelopeContainer.style.animation="slideUp 1.5s forwards"
 
 /* munculkan amplop */
 
@@ -315,11 +325,8 @@ popup.classList.remove("show")
 
 /* POPUP SEQUENCE SAAT MASUK */
 
-window.addEventListener("load",async()=>{
-
-try{
-await sound.play()
-}catch(e){}
+window.addEventListener("load", ()=>{
+showPopup()
 
 setTimeout(()=>showPopup("A little message for you ✨"),500)
 setTimeout(()=>showPopup("Open the envelope slowly 💌"),2600)
