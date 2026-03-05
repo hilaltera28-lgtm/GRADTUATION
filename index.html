@@ -5,151 +5,225 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Graduation</title>
 
-<!-- Calligraphy Font -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-body {
-    height: 100vh;
-    width: 100%;
-    overflow: hidden;
-    font-family: 'Great Vibes', cursive;
-    background: url("assets/background.jpg") center/cover no-repeat;
-    position: relative;
+body{
+height:100vh;
+width:100%;
+overflow:hidden;
+font-family:'Great Vibes',cursive;
+background:url("assets/background.jpg") center/cover no-repeat;
+position:relative;
 }
 
-.overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(8px);
-    background: rgba(255,255,255,0.4);
-    z-index: 1;
+/* DARK OVERLAY */
+
+.overlay{
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(6px);
+z-index:1;
 }
 
-.title {
-    position: absolute;
-    top: 8%;
-    width: 100%;
-    text-align: center;
-    font-size: 3rem;
-    color: #444;
-    z-index: 2;
+/* TITLE */
+
+.title{
+position:absolute;
+top:8%;
+width:100%;
+text-align:center;
+font-size:3rem;
+color:white;
+z-index:2;
+
+text-shadow:
+0 0 10px rgba(255,255,255,0.9),
+0 0 25px rgba(255,255,255,0.6);
 }
 
-.envelope-container {
-    position: absolute;
-    bottom: -300px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    z-index: 2;
-    animation: slideUp 1.5s forwards;
+/* ENVELOPE */
+
+.envelope-container{
+position:absolute;
+bottom:-300px;
+width:100%;
+display:flex;
+justify-content:center;
+z-index:2;
+opacity:0;
 }
 
-.envelope-container img {
-    width: 80vw;
-    max-width: 420px;
-    transition: opacity 0.4s ease, transform 0.4s ease;
+.envelope-container img{
+width:80vw;
+max-width:420px;
+transition:opacity .4s, transform .4s;
 }
 
-.fade-out {
-    opacity: 0;
-    transform: scale(0.9);
+.envelope-container img:active{
+transform:scale(.95);
 }
 
-.fade-in {
-    opacity: 1;
-    transform: scale(1);
+.fade-out{
+opacity:0;
+transform:scale(.9);
 }
 
-.envelope-container img:active {
-    transform: scale(0.95);
+.fade-in{
+opacity:1;
+transform:scale(1);
 }
 
-@keyframes slideUp {
-    to {
-        bottom: 30%;
-    }
+@keyframes slideUp{
+to{ bottom:30%; }
 }
 
-.final-text {
-    position: absolute;
-    bottom: 15%;
-    width: 100%;
-    text-align: center;
-    font-size: 2rem;
-    color: #333;
-    opacity: 0;
-    z-index: 2;
-    transition: opacity 1s ease;
+/* MESSAGE AREA */
+
+.final-text{
+position:absolute;
+bottom:10%;
+width:100%;
+text-align:center;
+opacity:0;
+z-index:2;
+transition:opacity 1s;
+
+color:white;
+text-shadow:0 0 10px rgba(255,255,255,0.8);
+font-family:'Poppins',sans-serif;
 }
 
-canvas {
-    position: fixed;   /* penting biar nempel layar */
-    top: 0;
-    left: 0;
-    width: 100vw;      /* full lebar */
-    height: 100vh;     /* full tinggi */
-    z-index: 5;
-    pointer-events: none;
+.letter{
+position:absolute;
+bottom:30%;
+left:50%;
+transform:translateX(-50%) translateY(120px);
+background:white;
+color:#333;
+padding:20px;
+border-radius:10px;
+font-family:'Poppins',sans-serif;
+opacity:0;
+transition:0.8s;
+width:70%;
+max-width:300px;
+text-align:center;
 }
+
+.letter.show{
+opacity:1;
+transform:translateX(-50%) translateY(-80px);
+}
+
+input,textarea{
+padding:10px;
+border:none;
+border-radius:8px;
+margin:5px;
+width:70%;
+max-width:260px;
+}
+
+button{
+padding:10px 20px;
+border:none;
+border-radius:10px;
+background:white;
+color:#444;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* FIREWORK */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+width:100vw;
+height:100vh;
+z-index:5;
+pointer-events:none;
+}
+
+/* POPUP */
+
+.popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(.8);
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(10px);
+padding:20px 30px;
+border-radius:15px;
+color:white;
+font-family:'Poppins',sans-serif;
+opacity:0;
+transition:.5s;
+z-index:10;
+}
+
+.popup-note{
+font-size:12px;
+margin-top:8px;
+opacity:0.7;
+font-family:'Poppins',sans-serif;
+}
+
+.popup.show{
+opacity:1;
+transform:translate(-50%,-50%) scale(1);
+}
+
 </style>
-
 </head>
+
 <body>
 
 <div class="overlay"></div>
 
+<div id="popup" class="popup">
+<div id="popupText"></div>
+<div class="popup-note">tap to continue</div>
+</div>
+
 <h1 class="title">Happy Graduation</h1>
 
 <div class="envelope-container">
-    <img id="envelope" src="assets/amplop-closed.png" alt="Envelope">
+<img id="envelope" src="assets/amplop-closed.png">
 </div>
 
-<div <div class="final-text">
+<div class="letter" id="letter">
+<p>Congratulations on your graduation 🎓</p>
+</div>
 
-<p style="font-family: sans-serif; font-size:16px; color:#444; margin-bottom:10px;">
+<div class="final-text">
+
+<p style="margin-bottom:10px;">
 Tinggalkan pesan untuk seseorang yang mengirimmu ini 💌
 </p>
 
-<input id="from_name" placeholder="Your Name"
-style="padding:10px;border:none;border-radius:8px;margin:5px;width:70%;max-width:250px;">
+<input id="from_name" placeholder="Your Name">
 
 <br>
 
-<textarea id="message" placeholder="Write your message..."
-style="padding:10px;border:none;border-radius:8px;margin:5px;width:70%;max-width:250px;height:80px;"></textarea>
+<textarea id="message" placeholder="Write your message..."></textarea>
 
 <br>
 
-<button onclick="sendMessage()"
-style="padding:10px 20px;border:none;border-radius:10px;background:#fff;color:#444;font-weight:bold;">
-Send
-</button>
-
-</div>
-
-<input id="from_name" placeholder="Your Name"
-style="padding:10px;border:none;border-radius:8px;margin:5px;width:70%;max-width:250px;">
-
-<br>
-
-<textarea id="message" placeholder="Write your message..."
-style="padding:10px;border:none;border-radius:8px;margin:5px;width:70%;max-width:250px;height:80px;"></textarea>
-
-<br>
-
-<button onclick="sendMessage()"
-style="padding:10px 20px;border:none;border-radius:10px;background:#fff;color:#444;font-weight:bold;">
-Send
-</button>
+<button onclick="sendMessage()">Send</button>
 
 </div>
 
@@ -158,76 +232,6 @@ Send
 <canvas id="fireworks"></canvas>
 
 <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2/dist/index.umd.js"></script>
-
-
-<script>
-const envelope = document.getElementById("envelope");
-const sound = document.getElementById("gradSound");
-const finalText = document.querySelector(".final-text");
-
-let stage = 0;
-
-const images = [
-    "assets/amplop-closed.png",
-    "assets/amplop-open-1.png",
-    "assets/amplop-open-2.png",
-    "assets/amplop-open-3.png"
-];
-
-envelope.addEventListener("click", async () => {
-    if (stage < 3) {
-
-        envelope.classList.add("fade-out");
-
-        setTimeout(async () => {
-            stage++;
-            envelope.src = images[stage];
-
-            if (stage === 1) {
-                try {
-                    await sound.play();
-                } catch (err) {}
-            }
-
-            envelope.classList.remove("fade-out");
-            envelope.classList.add("fade-in");
-
-            setTimeout(() => {
-                envelope.classList.remove("fade-in");
-            }, 400);
-
-        }, 400);
-    }
-
-    if (stage === 3) {
-        launchFireworks();
-        finalText.style.opacity = 1;
-    }
-});
-
-function launchFireworks() {
-    const container = document.getElementById("fireworks");
-
-    const fireworks = new Fireworks.default(container, {
-        autoresize: true,
-        opacity: 0.8,
-        acceleration: 1.05,
-        friction: 0.95,
-        gravity: 1.5,
-        particles: 120,
-        trace: 4,
-        explosion: 6,
-        boundaries: {
-            top: 0,
-            bottom: window.innerHeight,
-            left: 0,
-            right: window.innerWidth
-        }
-    });
-
-    fireworks.start();
-}
-</script>
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
 <script>
@@ -236,21 +240,170 @@ function launchFireworks() {
 emailjs.init("TCM2fJBBwcjLh27Dh");
 })();
 
-function sendMessage(){
+const envelope=document.getElementById("envelope")
+const sound=document.getElementById("gradSound")
+const finalText=document.querySelector(".final-text")
+const popup=document.getElementById("popup")
+const popupText=document.getElementById("popupText")
+const envelopeContainer=document.querySelector(".envelope-container")
 
-let name = document.getElementById("from_name").value;
-let message = document.getElementById("message").value;
+let popupStage=0
 
-emailjs.send("Graduation","template_0gqu7rt",{
-from_name: name,
-message: message
-}).then(function(){
+const popupMessages=[
+"A little message for you ✨",
+"Open the envelope slowly 💌",
+"Something awaits inside..."
+]
 
-alert("Message Sent!");
+window.addEventListener("load", async ()=>{
 
-});
+try{
+await sound.play()
+}catch(e){}
+
+showPopup()
+
+})
+
+function showPopup(){
+
+popupText.innerText=popupMessages[popupStage]
+popup.classList.add("show")
 
 }
+
+popup.addEventListener("click",()=>{
+
+popupStage++
+
+if(popupStage<popupMessages.length){
+
+popupText.innerText=popupMessages[popupStage]
+
+}else{
+
+popup.classList.remove("show")
+
+/* munculkan amplop */
+
+envelopeContainer.style.opacity=1
+envelopeContainer.style.animation="slideUp 1.5s forwards"
+
+}
+
+})
+
+let stage=0
+
+const images=[
+"assets/amplop-closed.png",
+"assets/amplop-open-1.png",
+"assets/amplop-open-2.png",
+"assets/amplop-open-3.png"
+]
+
+function showPopup(text){
+
+popup.innerText=text
+popup.classList.add("show")
+
+setTimeout(()=>{
+popup.classList.remove("show")
+},1800)
+
+}
+
+/* POPUP SEQUENCE SAAT MASUK */
+
+window.addEventListener("load",async()=>{
+
+try{
+await sound.play()
+}catch(e){}
+
+setTimeout(()=>showPopup("A little message for you ✨"),500)
+setTimeout(()=>showPopup("Open the envelope slowly 💌"),2600)
+setTimeout(()=>showPopup("Something awaits inside..."),4700)
+
+})
+
+/* ENVELOPE CLICK */
+
+envelope.addEventListener("click",()=>{
+
+if(stage<3){
+
+envelope.classList.add("fade-out")
+
+setTimeout(()=>{
+
+stage++
+envelope.src=images[stage]
+
+showPopup("Keep opening...")
+
+envelope.classList.remove("fade-out")
+envelope.classList.add("fade-in")
+
+setTimeout(()=>{
+envelope.classList.remove("fade-in")
+},400)
+
+},400)
+
+}
+
+if(stage===3){
+
+launchFireworks()
+finalText.style.opacity=1
+
+showPopup("Send a message back 💌")
+
+document.getElementById("letter").classList.add("show")
+}
+
+})
+
+/* FIREWORK */
+
+function launchFireworks(){
+
+const container=document.getElementById("fireworks")
+
+const fireworks=new Fireworks.default(container,{
+autoresize:true,
+opacity:0.8,
+acceleration:1.05,
+friction:0.95,
+gravity:1.5,
+particles:120,
+trace:4,
+explosion:6
+})
+
+fireworks.start()
+
+}
+
+/* EMAIL SEND */
+
+function sendMessage(){
+
+let name=document.getElementById("from_name").value
+let message=document.getElementById("message").value
+
+emailjs.send("Graduation","template_0gqu7rt",{
+from_name:name,
+message:message
+}).then(()=>{
+
+alert("Message Sent!")
+
+})
+
+}
+
 </script>
 
 </body>
