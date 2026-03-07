@@ -235,10 +235,6 @@ transform:translate(-50%,-50%) scale(1);
 Tinggalkan pesan untuk seseorang yang mengirimmu ini 💌
 </p>
 
-<input id="from_name" placeholder="Your Name">
-
-<br>
-
 <textarea id="message" placeholder="Write your message..."></textarea>
 
 <br>
@@ -378,14 +374,23 @@ fireworks.start()
 
 function sendMessage(){
 
-let name = document.getElementById("from_name").value
 let message = document.getElementById("message").value
 
 emailjs.send("Graduation","template_0gqu7rt",{
-from_name:name,
 message:message
 }).then(()=>{
-alert("Message Sent!")
+
+    setTimeout(()=>{
+popup.classList.remove("show")
+},3000)
+
+// tampilkan popup
+popupText.innerText = "terimakasihhhh, senengg bangett bisa kenall sama kamuuu 🫶"
+popup.classList.add("show")
+
+// hapus isi input
+document.getElementById("message").value = ""
+
 })
 
 }
