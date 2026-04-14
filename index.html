@@ -215,6 +215,39 @@ opacity:1;
 transform:translate(-50%,-50%) scale(1);
 }
 
+.album{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.9);
+  z-index:9999;
+  opacity:0;
+  pointer-events:none;
+  transition:1s;
+}
+
+.album.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.album-container{
+  display:flex;
+  overflow-x:scroll;
+  height:100%;
+  scroll-snap-type: x mandatory;
+}
+
+.album-container img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  flex-shrink:0;
+  scroll-snap-align:center;
+}
+
 </style>
 </head>
 
@@ -388,16 +421,16 @@ emailjs.send("Graduation","template_0gqu7rt",{
 message:message
 }).then(()=>{
 
-    setTimeout(()=>{
-popup.classList.remove("show")
-},3000)
-
-// tampilkan popup
 popupText.innerText = "terimakasihhhh, senengg bangett bisa kenall sama kamuuu 🫶"
 popup.classList.add("show")
 
-// hapus isi input
 document.getElementById("message").value = ""
+
+// setelah 2 detik → munculin album
+setTimeout(()=>{
+  popup.classList.remove("show")
+  album.classList.add("show")
+},2000)
 
 })
 
@@ -413,7 +446,21 @@ popup.classList.remove("show")
 },1500)
 
 }
+
+const album = document.getElementById("album")
+
 </script>
+
+<div class="album" id="album">
+  <div class="album-container">
+
+    <img src="assets/foto1.jpg">
+    <img src="assets/foto2.jpg">
+    <img src="assets/foto3.jpg">
+    <img src="assets/foto4.jpg">
+
+  </div>
+</div>
 
 </body>
 </html>
