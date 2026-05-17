@@ -445,9 +445,17 @@ const envelopeFrames = [
 
 let envelopeIndex = 0;
 
-const envelopePage = document.getElementById("page4");
+const envelopePage = document.getElementById("page5");
+
+let envelopeReady = false;
+
+setTimeout(()=>{
+    envelopeReady = true;
+},500);
 
 envelopePage.addEventListener("click",()=>{
+
+    if(!envelopeReady) return;
 
     if(envelopeIndex < envelopeFrames.length - 1){
 
