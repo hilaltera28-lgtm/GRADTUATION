@@ -147,11 +147,12 @@ button:active{
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    transform:translateY(35px);
+    transform:translateY(-30px);
 }
 
 .envelope{
-    width:450px;
+    width:420px;
+    max-width:80vw;
     transition:0.5s;
     animation:pop 2s infinite ease-in-out;
 }
@@ -295,8 +296,8 @@ button:active{
 
 
 <!-- AUDIO -->
-<audio id="bgm" loop>
-    <source src="musik.mp3" type="audio/mp3">
+<audio id="bgm" loop playsinline>
+    <source src="assets/musik.mp3" type="audio/mp3">
 </audio>
 
 
@@ -339,16 +340,17 @@ function checkPassword(){
 
     const input = document.getElementById("password").value;
     const error = document.getElementById("errorText");
+    const bgm = document.getElementById("bgm");
 
     if(input.toLowerCase() === "terry gemas"){
+
+        bgm.play().catch(()=>{});
 
         document.getElementById("loginScreen").classList.add("hidden");
 
         pages[0].classList.add("active");
 
         typeWriter("text1", message1);
-
-        document.getElementById("bgm").play();
 
     }else{
         error.innerText = "passwordnya salahh :(";
