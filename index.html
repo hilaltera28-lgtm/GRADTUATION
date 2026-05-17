@@ -480,26 +480,22 @@ scenePages.forEach((scene)=>{
 
     scene.addEventListener("click",()=>{
 
-        scene.style.opacity = 0;
+        scene.classList.remove("active");
 
-        setTimeout(()=>{
+        scene.style.opacity = 1;
 
-            scene.classList.remove("active");
+        const nextPage = pages[pages.indexOf(scene)+1];
 
-            const nextPage = pages[pages.indexOf(scene)+1];
+        if(nextPage){
 
-            if(nextPage){
+            nextPage.classList.add("active");
 
-                nextPage.classList.add("active");
-
-            }
-
-        },300);
+        }
 
     });
 
 });
-
+    
 setInterval(createHeart,400);
 
 </script>
