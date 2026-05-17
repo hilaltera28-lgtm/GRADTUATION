@@ -1,466 +1,524 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Happy Graduation</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
 }
 
 body{
-height:100vh;
-width:100%;
-overflow:hidden;
-font-family:'Great Vibes',cursive;
-background:url("assets/background.jpg") center/cover no-repeat;
-position:relative;
+    overflow:hidden;
+    background:linear-gradient(to bottom,#ffd6e7,#fff0f5);
+    height:100vh;
+    color:white;
 }
 
-/* DARK OVERLAY */
-
-.overlay{
-position:absolute;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.6);
-backdrop-filter:blur(6px);
-z-index:1;
-pointer-events: none;
+.screen{
+    width:100%;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    position:absolute;
+    top:0;
+    left:0;
+    padding:30px;
+    text-align:center;
+    transition:0.8s;
 }
 
-canvas {
-  pointer-events: none;
+.hidden{
+    opacity:0;
+    pointer-events:none;
+    transform:scale(1.05);
 }
 
-/* TITLE */
-
-.title{
-position:absolute;
-top:15%;
-width:100%;
-text-align:center;
-font-size:3rem;
-color:white;
-z-index:2;
-animation: glow 2s infinite alternate;
-
-text-shadow:
-0 0 10px rgba(255,255,255,0.9),
-0 0 25px rgba(255,255,255,0.6);
+h1{
+    font-size:28px;
+    line-height:1.5;
+    color:#ff4f8b;
+    margin-bottom:30px;
+    text-shadow:0 0 10px rgba(255,255,255,0.6);
 }
 
-@keyframes glow{
-from{
-text-shadow:
-0 0 10px white,
-0 0 20px white;
-}
-to{
-text-shadow:
-0 0 20px white,
-0 0 40px white;
-}
-}
-
-/* ENVELOPE */
-
-.envelope-container{
-position:absolute;
-bottom:-300px;
-width:100%;
-display:flex;
-justify-content:center;
-z-index:999;
-opacity:0;
-}
-
-.envelope-container img{
-width:90vw;
-max-width:500px;
-transition:opacity .4s, transform .4s;
-cursor:pointer;
-pointer-events: auto;
-touch-action: manipulation;
-display: block;
-}
-
-.envelope-container img:hover{
-transform:scale(1.05) rotate(-1deg);
-}
-
-.envelope-container img:active{
-transform:scale(.95);
-}
-
-.fade-out{
-opacity:0;
-transform:scale(.9);
-}
-
-.fade-in{
-opacity:1;
-transform:scale(1);
-}
-
-@keyframes slideUp{
-to{ bottom:20%; }
-}
-
-/* MESSAGE AREA */
-
-.final-text{
-position:absolute;
-bottom:10%;
-width:100%;
-text-align:center;
-opacity:0;
-z-index:2;
-transition:opacity 1s;
-
-color:white;
-text-shadow:0 0 10px rgba(255,255,255,0.8);
-font-family:'Poppins',sans-serif;
-}
-
-.letter{
-position:absolute;
-bottom:30%;
-left:50%;
-transform:translateX(-50%) translateY(200px) scale(.8);
-background:white;
-color:#333;
-padding:20px;
-border-radius:12px;
-font-family:'Poppins',sans-serif;
-opacity:0;
-transition:1s;
-width:75%;
-max-width:320px;
-text-align:center;
-box-shadow:0 10px 40px rgba(0,0,0,0.3);
-}
-
-.letter.show{
-opacity:1;
-transform:translateX(-50%) translateY(-60px) scale(1);
-}
-
-input,textarea{
-padding:10px;
-border:none;
-border-radius:8px;
-margin:5px;
-width:70%;
-max-width:260px;
+input{
+    width:100%;
+    max-width:320px;
+    padding:15px;
+    border:none;
+    border-radius:18px;
+    outline:none;
+    font-size:16px;
+    background:rgba(255,255,255,0.7);
+    color:#ff4f8b;
+    text-align:center;
+    backdrop-filter:blur(10px);
 }
 
 button{
-padding:10px 20px;
-border:none;
-border-radius:10px;
-background:white;
-color:#444;
-font-weight:bold;
-cursor:pointer;
+    margin-top:15px;
+    padding:13px 28px;
+    border:none;
+    border-radius:20px;
+    background:#ff6fa5;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-/* FIREWORK */
-
-canvas{
-position:fixed;
-top:0;
-left:0;
-width:100vw;
-height:100vh;
-z-index:1;
-pointer-events:none;
+button:active{
+    transform:scale(0.95);
 }
 
-/* POPUP */
-
-.popup{
-position:fixed;
-top:65%;
-left:50%;
-transform:translate(-50%,-50%) scale(.8);
-background:rgba(255,255,255,0.1);
-backdrop-filter:blur(10px);
-padding:20px 30px;
-border-radius:15px;
-color:white;
-font-family:'Poppins',sans-serif;
-opacity:0;
-transition:.5s;
-z-index:10;
+.error{
+    margin-top:12px;
+    color:#ff2d55;
+    font-size:14px;
 }
 
-.popup-note{
-font-size:12px;
-margin-top:8px;
-opacity:0.7;
-font-family:'Poppins',sans-serif;
+.page{
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:35px;
+    position:absolute;
+    top:0;
+    left:0;
+    opacity:0;
+    pointer-events:none;
+    transition:1s;
 }
 
-.popup.show{
-opacity:1;
-transform:translate(-50%,-50%) scale(1);
+.page.active{
+    opacity:1;
+    pointer-events:auto;
 }
 
-.album{
-  position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background: rgba(0,0,0,0.9);
-  z-index:9999;
-  opacity:0;
-  pointer-events:none;
-  transition:1s;
+.text-box{
+    font-size:24px;
+    line-height:1.8;
+    color:#ff4f8b;
+    font-weight:500;
+    min-height:150px;
+    white-space:pre-line;
 }
 
-.album.show{
-  opacity:1;
-  pointer-events:auto;
+.tap{
+    position:absolute;
+    bottom:40px;
+    font-size:14px;
+    color:#ff7da8;
+    animation:blink 1.5s infinite;
 }
 
-.album-container{
-  display:flex;
-  overflow-x:scroll;
-  height:100%;
-  scroll-snap-type: x mandatory;
+@keyframes blink{
+    0%{opacity:0.3;}
+    50%{opacity:1;}
+    100%{opacity:0.3;}
 }
 
-.album-container img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  flex-shrink:0;
-  scroll-snap-align:center;
+/* floating hearts */
+.heart{
+    position:absolute;
+    bottom:-20px;
+    color:#ff8db7;
+    animation:float 6s linear infinite;
+    opacity:0.6;
 }
 
+.envelope-container{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.envelope{
+    width:280px;
+    max-width:80vw;
+    transition:0.5s;
+    animation:pop 2s infinite ease-in-out;
+}
+
+.videoPlayer{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.videoTap{
+    position:absolute;
+    bottom:40px;
+    color:white;
+    font-size:14px;
+    opacity:0;
+    transition:0.5s;
+}
+
+@keyframes pop{
+    0%{
+        transform:scale(1);
+    }
+    50%{
+        transform:scale(1.03);
+    }
+    100%{
+        transform:scale(1);
+    }
+}
+
+@keyframes float{
+    0%{
+        transform:translateY(0) scale(1);
+        opacity:0;
+    }
+    20%{
+        opacity:0.7;
+    }
+    100%{
+        transform:translateY(-110vh) scale(1.8);
+        opacity:0;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<div class="overlay"></div>
+<!-- LOGIN PAGE -->
+<div class="screen" id="loginScreen">
 
-<div id="popup" class="popup">
-<div id="popupText"></div>
-<div class="popup-note">tap to continue</div>
-</div>
+    <h1>
+        halloo, happy graduation yaaa!!<br><br>
+        password buaat masuknya nanti aku kasih pas kamu udahh di rumahh, kabarin ajaa!!
+    </h1>
 
-<h1 class="title">Happy Graduation</h1>
+    <input type="teks" id="password" placeholder="masukkan password...">
 
-<div class="envelope-container">
-<img id="envelope" src="assets/amplop-closed.png">
-</div>
+    <button onclick="checkPassword()">masuk</button>
 
-<div class="letter" id="letter">
-<p>Congratulations on your graduation 🎓</p>
-</div>
-
-<div class="final-text">
-
-<p style="margin-bottom:10px;">
-Tinggalkan pesan untuk seseorang yang mengirimmu ini 💌
-</p>
-
-<textarea id="message" placeholder="Write your message..."></textarea>
-
-<br>
-
-<button onclick="sendMessage()">Send</button>
+    <div class="error" id="errorText"></div>
 
 </div>
 
-<audio id="gradSound" src="assets/sound.mp3" loop></audio>
 
-<canvas id="fireworks"></canvas>
+<!-- PAGE 1 -->
+<div class="page" id="page1">
+    <div>
+        <div class="text-box" id="text1"></div>
+        <div class="tap">tap to continue ♡</div>
+    </div>
+</div>
 
-<script src="https://cdn.jsdelivr.net/npm/fireworks-js@2/dist/index.umd.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+    <div>
+        <div class="text-box" id="text2"></div>
+        <div class="tap">tap to continue ♡</div>
+    </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+    <div>
+        <div class="text-box" id="text3"></div>
+        <div class="tap">tap to continue ♡</div>
+    </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="page4">
+    <div>
+        <div class="text-box" id="text4"></div>
+        <div class="tap">tap to continue ♡</div>
+    </div>
+</div>
+
+<!-- VIDEO 1 -->
+<div class="page" id="videoPage1">
+
+    <video class="videoPlayer" playsinline>
+        <source src="videos/video1.mp4" type="video/mp4">
+    </video>
+</div>
+
+<!-- VIDEO 2 -->
+<div class="page" id="videoPage2">
+
+    <video class="videoPlayer" playsinline>
+        <source src="videos/video2.mp4" type="video/mp4">
+    </video>
+</div>
+
+<!-- VIDEO 3 -->
+<div class="page" id="videoPage3">
+
+    <video class="videoPlayer" playsinline>
+        <source src="videos/video3.mp4" type="video/mp4">
+    </video>
+</div>
+
+<!-- VIDEO 4 -->
+<div class="page" id="videoPage4">
+
+    <video class="videoPlayer" playsinline>
+        <source src="videos/video4.mp4" type="video/mp4">
+    </video>
+</div>
+
+<!-- VIDEO 5 -->
+<div class="page" id="videoPage5">
+
+    <video class="videoPlayer" playsinline>
+        <source src="videos/video5.mp4" type="video/mp4">
+    </video>
+</div>
+
+<!-- VIDEO 6 -->
+<div class="page" id="videoPage6">
+
+    <video class="videoPlayer" playsinline>
+        <source src="videos/video6.mp4" type="video/mp4">
+    </video>
+</div>
+
+<!-- ENVELOPE PAGE -->
+<div class="page" id="page5">
+    
+    <div class="envelope-container">
+
+        <img src="assets/amplop1.png" id="envelopeImage" class="envelope">
+
+        <div class="tap">
+            tap the envelope ♡
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- AUDIO -->
+<audio id="bgm" loop>
+    <source src="musik.mp3" type="audio/mp3">
+</audio>
+
 
 <script>
 
-emailjs.init("TCM2fJBBwcjLh27Dh")
+/* =========================
+   EDIT TULISAN DI SINI
+========================= */
 
-const envelope = document.getElementById("envelope")
-const sound = document.getElementById("gradSound")
-const finalText = document.querySelector(".final-text")
-const popup = document.getElementById("popup")
-const popupText = document.getElementById("popupText")
-const envelopeContainer = document.querySelector(".envelope-container")
+const message1 = `YEYYYYYY GRADDD!! CONGRATS YAAAA`;
 
-let popupStage = 0
-let stage = 0
+const message2 = `syumm pasti kamuu capek poll buat hari iniii \n it's okey lah yaa last day in SMADALA`;
 
-const popupMessages = [
-"HAIII JENNYYY >_< ✨",
-"CONGRATS FOR YOUR GRADUATIONS YAAAAA 💌",
-"I Have Somethings For Youu, Dibacaa yaaaaaaa 💗"
-]
+const message3 = `SO PROUD OF YOU BISA NGELEWATIN MASA MASA INIIII`;
 
-const images = [
-"assets/amplop-closed.png",
-"assets/amplop-open-1.png",
-"assets/amplop-open-2.png",
-"assets/amplop-open-3.png"
-]
+const message4 = `jujur deg-degan bangeett rasanya aku ngasih web ini ke kamuu \n tapi semoga kamu ngga shock yaa`;
 
-/* saat web dibuka */
+/* ========================= */
 
-window.onload = () => {
 
-popupText.innerText = popupMessages[0]
-popup.classList.add("show")
+const pages = [
+    document.getElementById("page1"),
+    document.getElementById("page2"),
+    document.getElementById("page3"),
+    document.getElementById("page4"),
+
+     document.getElementById("videoPage1"),
+    document.getElementById("videoPage2"),
+    document.getElementById("videoPage3"),
+    document.getElementById("videoPage4"),
+    document.getElementById("videoPage5"),
+    document.getElementById("videoPage6"),
+
+
+    document.getElementById("page5")
+];
+
+let currentPage = 0;
+
+function checkPassword(){
+
+    const input = document.getElementById("password").value;
+    const error = document.getElementById("errorText");
+
+    if(input.toLowerCase() === "terry gemas"){
+
+        document.getElementById("loginScreen").classList.add("hidden");
+
+        pages[0].classList.add("active");
+
+        typeWriter("text1", message1);
+
+        document.getElementById("bgm").play();
+
+    }else{
+        error.innerText = "passwordnya salahh :(";
+    }
+}
+
+pages.forEach((page,index)=>{
+
+    page.addEventListener("click",()=>{
+
+        if(index < pages.length - 1){
+
+            pages[index].classList.remove("active");
+
+            pages[index + 1].classList.add("active");
+
+            currentPage++;
+
+            if(currentPage === 1){
+                typeWriter("text2", message2);
+            }
+
+            if(currentPage === 2){
+                typeWriter("text3", message3);
+            }
+
+            if(currentPage === 3){
+                typeWriter("text4", message4);
+            }
+        }
+
+    });
+
+});
+
+function typeWriter(elementId, text){
+
+    let i = 0;
+    const speed = 35;
+
+    document.getElementById(elementId).innerHTML = "";
+
+    function typing(){
+
+        if(i < text.length){
+
+            document.getElementById(elementId).innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+
+        }
+
+    }
+
+    typing();
 
 }
 
-/* klik popup */
+/* floating hearts */
 
-popup.addEventListener("click", () => {
+function createHeart(){
 
-if(popupStage === 0){
-sound.currentTime = 0
-sound.play().catch(()=>{})
-}
+    const heart = document.createElement("div");
 
-popupStage++
+    heart.classList.add("heart");
 
-if(popupStage < popupMessages.length){
+    heart.innerHTML = "♡";
 
-popupText.innerText = popupMessages[popupStage]
+    heart.style.left = Math.random() * 100 + "vw";
 
-}else{
+    heart.style.fontSize = (Math.random() * 20 + 15) + "px";
 
-popup.classList.remove("show")
+    heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
 
-envelopeContainer.style.opacity = 1
-envelopeContainer.style.animation = "slideUp 1.5s forwards"
+    document.body.appendChild(heart);
 
-}
-
-})
-
-/* klik amplop */
-
-envelope.addEventListener("click", () => {
-
-if(stage < 3){
-
-showPopup("Keep opening the envelope 💌")
-
-envelope.classList.add("fade-out")
-
-setTimeout(() => {
-
-stage++
-envelope.src = images[stage]
-
-envelope.classList.remove("fade-out")
-envelope.classList.add("fade-in")
-
-setTimeout(()=>{
-envelope.classList.remove("fade-in")
-},400)
-
-},400)
+    setTimeout(()=>{
+        heart.remove();
+    },7000);
 
 }
 
-if(stage === 3){
+const envelopeImage = document.getElementById("envelopeImage");
 
-launchFireworks()
-finalText.style.opacity = 1
-document.getElementById("letter").classList.add("show")
+const envelopeFrames = [
+    "assets/amplop1.png",
+    "assets/amplop2.png",
+    "assets/amplop3.png",
+    "assets/amplop4.png"
+];
 
-}
+let envelopeIndex = 0;
 
-})
+envelopeImage.addEventListener("click",()=>{
 
-/* fireworks */
+    if(envelopeIndex < envelopeFrames.length - 1){
 
-function launchFireworks(){
+        envelopeIndex++;
 
-const container = document.getElementById("fireworks")
+        envelopeImage.style.opacity = 0;
 
-const fireworks = new Fireworks.default(container,{
-autoresize:true,
-opacity:0.6,
-acceleration:1.08,
-friction:0.94,
-gravity:1.3,
-particles:160,
-trace:6,
-explosion:8,
-intensity:40
-})
+        setTimeout(()=>{
 
-fireworks.start()
+            envelopeImage.src = envelopeFrames[envelopeIndex];
 
-}
+            envelopeImage.style.opacity = 1;
 
-/* kirim email */
+        },200);
 
-function sendMessage(){
+    }
 
-let message = document.getElementById("message").value
+});
 
-emailjs.send("Graduation","template_0gqu7rt",{
-message:message
-}).then(()=>{
+const videos = document.querySelectorAll(".videoPlayer");
 
-popupText.innerText = "terimakasihhhh, senengg bangett bisa kenall sama kamuuu 🫶"
-popup.classList.add("show")
+videos.forEach((video)=>{
 
-document.getElementById("message").value = ""
+    const parent = video.parentElement;
 
-// setelah 2 detik → munculin album
-setTimeout(()=>{
-  popup.classList.remove("show")
-  album.classList.add("show")
-},2000)
 
-})
+    parent.addEventListener("click",()=>{
 
-}
+        if(video.paused && !video.ended){
 
-function showPopup(text){
+            video.play();
 
-popupText.innerText = text
-popup.classList.add("show")
+        }else if(video.ended){
 
-setTimeout(()=>{
-popup.classList.remove("show")
-},1500)
+            parent.classList.remove("active");
 
-}
+            const nextPage = pages[pages.indexOf(parent)+1];
 
-const album = document.getElementById("album")
+            if(nextPage){
+
+                nextPage.classList.add("active");
+
+            }
+
+        }
+
+    });
+
+    video.addEventListener("ended",()=>{
+
+    });
+
+});
+
+setInterval(createHeart,400);
 
 </script>
-
-<div class="album" id="album">
-  <div class="album-container">
-
-    <img src="assets/foto1.jpg">
-    <img src="assets/foto2.jpg">
-    <img src="assets/foto3.jpg">
-    <img src="assets/foto4.jpg">
-
-  </div>
-</div>
 
 </body>
 </html>
