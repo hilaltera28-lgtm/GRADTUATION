@@ -359,6 +359,8 @@ function checkPassword(){
 
 pages.forEach((page,index)=>{
 
+    if(page.id === "page5") return;
+
     page.addEventListener("click",()=>{
 
         if(index < pages.length - 1){
@@ -380,6 +382,7 @@ pages.forEach((page,index)=>{
             if(currentPage === 3){
                 typeWriter("text4", message4);
             }
+
         }
 
     });
@@ -446,24 +449,6 @@ const envelopeFrames = [
 
 let envelopeIndex = 0;
 
-let canTapEnvelope = false;
-
-const observer = new MutationObserver(()=>{
-
-    if(envelopePage.classList.contains("active")){
-
-        canTapEnvelope = false;
-
-        setTimeout(()=>{
-
-            canTapEnvelope = true;
-
-        },400);
-
-    }
-
-});
-
 observer.observe(envelopePage,{
     attributes:true,
     attributeFilter:["class"]
@@ -471,11 +456,7 @@ observer.observe(envelopePage,{
 
 envelopePage.addEventListener("click",()=>{
 
-    if(!canTapEnvelope) return;
-
     if(envelopeIndex < envelopeFrames.length - 1){
-
-        canTapEnvelope = false;
 
         envelopeIndex++;
 
@@ -486,12 +467,6 @@ envelopePage.addEventListener("click",()=>{
             envelopeImage.src = envelopeFrames[envelopeIndex];
 
             envelopeImage.style.opacity = 1;
-
-            setTimeout(()=>{
-
-                canTapEnvelope = true;
-
-            },300);
 
         },200);
 
