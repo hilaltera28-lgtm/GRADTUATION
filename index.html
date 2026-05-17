@@ -158,28 +158,14 @@ button:active{
     animation:pop 2s infinite ease-in-out;
 }
 
-.videoPlayer{
+.sceneImage{
     width:100%;
     height:100%;
     object-fit:cover;
 
-    opacity:1 !important;
-    display:block;
+    opacity:1;
 
-    backface-visibility:hidden;
-    -webkit-backface-visibility:hidden;
-
-    transform:translateZ(0);
-    -webkit-transform:translateZ(0);    
-}
-
-.videoTap{
-    position:absolute;
-    bottom:40px;
-    color:white;
-    font-size:14px;
-    opacity:0;
-    transition:0.5s;
+    transition:0.4s ease;
 }
 
 @keyframes pop{
@@ -261,52 +247,34 @@ button:active{
     </div>
 </div>
 
-<!-- VIDEO 1 -->
-<div class="page" id="videoPage1">
-
-    <video class="videoPlayer" playsinline>
-        <source src="videos/video1.mp4" type="video/mp4">
-    </video>
+<!-- SCENE 1 -->
+<div class="page" id="scenePage1">
+    <img src="assets/scene1.png" class="sceneImage">
 </div>
 
-<!-- VIDEO 2 -->
-<div class="page" id="videoPage2">
-
-    <video class="videoPlayer" playsinline>
-        <source src="videos/video2.mp4" type="video/mp4">
-    </video>
+<!-- SCENE 2 -->
+<div class="page" id="scenePage2">
+    <img src="assets/scene2.png" class="sceneImage">
 </div>
 
-<!-- VIDEO 3 -->
-<div class="page" id="videoPage3">
-
-    <video class="videoPlayer" playsinline>
-        <source src="videos/video3.mp4" type="video/mp4">
-    </video>
+<!-- SCENE 3 -->
+<div class="page" id="scenePage3">
+    <img src="assets/scene3.png" class="sceneImage">
 </div>
 
-<!-- VIDEO 4 -->
-<div class="page" id="videoPage4">
-
-    <video class="videoPlayer" playsinline>
-        <source src="videos/video4.mp4" type="video/mp4">
-    </video>
+<!-- SCENE 4 -->
+<div class="page" id="scenePage4">
+    <img src="assets/scene4.png" class="sceneImage">
 </div>
 
-<!-- VIDEO 5 -->
-<div class="page" id="videoPage5">
-
-    <video class="videoPlayer" playsinline>
-        <source src="videos/video5.mp4" type="video/mp4">
-    </video>
+<!-- SCENE 5 -->
+<div class="page" id="scenePage5">
+    <img src="assets/scene5.png" class="sceneImage">
 </div>
 
-<!-- VIDEO 6 -->
-<div class="page" id="videoPage6">
-
-    <video class="videoPlayer" playsinline>
-        <source src="videos/video6.mp4" type="video/mp4">
-    </video>
+<!-- SCENE 6 -->
+<div class="page" id="scenePage6">
+    <img src="assets/scene6.png" class="sceneImage">
 </div>
 
 <!-- ENVELOPE PAGE -->
@@ -337,13 +305,13 @@ button:active{
    EDIT TULISAN DI SINI
 ========================= */
 
-const message1 = `YEYYYYYY GRADDD!! CONGRATS YAAAA`;
+const message1 = `YEYYYYYY LULUSSS!! CONGRATS YAAAA`;
 
-const message2 = `syumm pasti kamuu capek poll buat hari iniii \n it's okey lah yaa last day in SMADALA`;
+const message2 = `SYUMM PASTI KAMUU CAPEK POLL BUAT HARI INIII, IT'S OKEY LAH YAA BUAT LAST DAY IN SMADA TERCINTAA♡`;
 
 const message3 = `SO PROUD OF YOU BISA NGELEWATIN MASA MASA INIIII`;
 
-const message4 = `jujur deg-degan bangeett rasanya aku ngasih web ini ke kamuu \n tapi semoga kamu ngga shock yaa`;
+const message4 = `JUJUR DEG-DEGAN BANGEET RASANYA AKUU NGASIIH WEB INI KE KAMUUU, SEMOGA KAMUU NGGA SHOCK YAAAA!!`;
 
 /* ========================= */
 
@@ -354,13 +322,12 @@ const pages = [
     document.getElementById("page3"),
     document.getElementById("page4"),
 
-     document.getElementById("videoPage1"),
-    document.getElementById("videoPage2"),
-    document.getElementById("videoPage3"),
-    document.getElementById("videoPage4"),
-    document.getElementById("videoPage5"),
-    document.getElementById("videoPage6"),
-
+     document.getElementById("scenePage1"),
+    document.getElementById("scenePage2"),
+    document.getElementById("scenePage3"),
+    document.getElementById("scenePage4"),
+    document.getElementById("scenePage5"),
+    document.getElementById("scenePage6"),
 
     document.getElementById("page5")
 ];
@@ -465,6 +432,7 @@ function createHeart(){
 
 const envelopeImage = document.getElementById("envelopeImage");
 
+
 const envelopeFrames = [
     "assets/amplop1.png",
     "assets/amplop2.png",
@@ -474,7 +442,9 @@ const envelopeFrames = [
 
 let envelopeIndex = 0;
 
-envelopeImage.addEventListener("click",()=>{
+const envelopePage = document.getElementById("page4");
+
+envelopePage.addEventListener("click",()=>{
 
     if(envelopeIndex < envelopeFrames.length - 1){
 
@@ -494,24 +464,19 @@ envelopeImage.addEventListener("click",()=>{
 
 });
 
-const videos = document.querySelectorAll(".videoPlayer");
+const scenePages = document.querySelectorAll('[id^="scenePage"]');
 
-videos.forEach((video)=>{
+scenePages.forEach((scene)=>{
 
-    const parent = video.parentElement;
+    scene.addEventListener("click",()=>{
 
+        scene.style.opacity = 0;
 
-    parent.addEventListener("click",()=>{
+        setTimeout(()=>{
 
-        if(video.paused && !video.ended){
+            scene.classList.remove("active");
 
-            video.play();
-
-        }else if(video.ended){
-
-            parent.classList.remove("active");
-
-            const nextPage = pages[pages.indexOf(parent)+1];
+            const nextPage = pages[pages.indexOf(scene)+1];
 
             if(nextPage){
 
@@ -519,11 +484,7 @@ videos.forEach((video)=>{
 
             }
 
-        }
-
-    });
-
-    video.addEventListener("ended",()=>{
+        },300);
 
     });
 
