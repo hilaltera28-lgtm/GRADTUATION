@@ -433,8 +433,9 @@ function createHeart(){
 
 }
 
-const envelopeImage = document.getElementById("envelopeImage");
+const envelopePage = document.getElementById("page5");
 
+const envelopeImage = document.getElementById("envelopeImage");
 
 const envelopeFrames = [
     "assets/amplop1.png",
@@ -445,19 +446,36 @@ const envelopeFrames = [
 
 let envelopeIndex = 0;
 
-const envelopePage = document.getElementById("page5");
+let canTapEnvelope = false;
 
-let envelopeReady = false;
+const observer = new MutationObserver(()=>{
 
-setTimeout(()=>{
-    envelopeReady = true;
-},500);
+    if(envelopePage.classList.contains("active")){
+
+        canTapEnvelope = false;
+
+        setTimeout(()=>{
+
+            canTapEnvelope = true;
+
+        },400);
+
+    }
+
+});
+
+observer.observe(envelopePage,{
+    attributes:true,
+    attributeFilter:["class"]
+});
 
 envelopePage.addEventListener("click",()=>{
 
-    if(!envelopeReady) return;
+    if(!canTapEnvelope) return;
 
     if(envelopeIndex < envelopeFrames.length - 1){
+
+        canTapEnvelope = false;
 
         envelopeIndex++;
 
@@ -468,6 +486,12 @@ envelopePage.addEventListener("click",()=>{
             envelopeImage.src = envelopeFrames[envelopeIndex];
 
             envelopeImage.style.opacity = 1;
+
+            setTimeout(()=>{
+
+                canTapEnvelope = true;
+
+            },300);
 
         },200);
 
