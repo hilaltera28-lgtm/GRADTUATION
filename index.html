@@ -147,7 +147,7 @@ button:active{
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    transform:translateY(-30px);
+    transform:translateY(80px);
 }
 
 .envelope{
@@ -293,6 +293,12 @@ button:active{
 
 </div>
 
+<!-- ENDING PAGE -->
+<div class="page" id="endingPage">
+
+    <div class="text-box" id="endingText"></div>
+
+</div>
 
 <!-- AUDIO -->
 <audio id="bgm" loop playsinline>
@@ -314,6 +320,7 @@ const message3 = `SO PROUD OF YOU BISA NGELEWATIN MASA MASA INIIII`;
 
 const message4 = `JUJUR DEG-DEGAN BANGEET RASANYA AKUU NGASIIH WEB INI KE KAMUUU, SEMOGA KAMUU NGGA SHOCK YAAAA!!`;
 
+const endingMessage = `Thank you \n Happy Graduation!!!♡`;
 /* ========================= */
 
 
@@ -330,7 +337,8 @@ const pages = [
     document.getElementById("scenePage5"),
     document.getElementById("scenePage6"),
 
-    document.getElementById("page5")
+    document.getElementById("page5"),
+    document.getElementById("endingPage")
 ];
 
 let currentPage = 0;
@@ -439,7 +447,10 @@ const envelopeFrames = [
     "assets/amplop1.png",
     "assets/amplop2.png",
     "assets/amplop3.png",
-    "assets/amplop4.png"
+    "assets/amplop4.png",
+    "assets/amplop5.png",
+    "assets/amplop6.png",
+    "assets/amplop7.png"
 ];
 
 let envelopeIndex = 0;
@@ -459,6 +470,14 @@ envelopePage.addEventListener("click",()=>{
             envelopeImage.style.opacity = 1;
 
         },200);
+
+    }else{
+
+        envelopePage.classList.remove("active");
+
+        document.getElementById("endingPage").classList.add("active");
+
+        typeWriter("endingText", endingMessage);
 
     }
 
