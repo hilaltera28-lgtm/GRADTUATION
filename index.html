@@ -55,22 +55,22 @@ h1{
 .loginText{
     display:flex;
     flex-direction:column;
-
     gap:12px;
 
     margin-bottom:30px;
 
     width:100%;
+    max-width:500px;
 
     align-items:center;
-
     text-align:center;
-
-    transform:translateY(65px);
-    transform:translateX(65px);
 
     margin-left:auto;
     margin-right:auto;
+}
+
+#loginScreen{
+    gap:15px;
 }
     
 .title1{
@@ -245,19 +245,21 @@ button:active{
 <body>
 
 <!-- LOGIN PAGE -->
-<div class="loginText">
+<div class="screen" id="loginScreen">
 
-    <div class="title1">
-        Halloo, Happy graduation yaaa!!
+    <div class="loginText">
+
+        <div class="title1">
+            Halloo, Happy graduation yaaa!!
+        </div>
+
+        <div class="title2">
+            Password buat masuknya nanti aku kasih pas kamu udahh di rumahh, kabarin ajaa!!
+        </div>
+
     </div>
 
-    <div class="title2">
-        Password buat masuknya nanti aku kasih pas kamu udahh di rumahh, kabarin ajaa!!
-    </div>
-
-</div>
-
-    <input type="teks" id="password" placeholder="masukkan password...">
+    <input type="text" id="password" placeholder="masukkan password...">
 
     <button onclick="checkPassword()">masuk</button>
 
